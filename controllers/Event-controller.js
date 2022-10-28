@@ -1,4 +1,3 @@
-const { UserModel } = require("../../Book_Record_Management/models");
 const { EventModel } = require("../models");
 
 exports.getAllEvents = async (req, res) => {
@@ -9,38 +8,39 @@ exports.getAllEvents = async (req, res) => {
             message: "No Events available yet"
         })
     }
-    return res.satus(200).json(
+    console.log(Events);
+    return res.status(200).json(
         {
             success: true,
             message: Events
         }
-    )
-}
-exports.getEventById = async (res, req) => {
+    );
+};
+exports.getEventById = async (req, res) => {
     const { id } = req.params;
-    const Event = await UserModel.findById(id);
+    const Event = await EventModel.findById(id);
     if (!Event) {
         return res.status(404).json({
             success: false,
             message: "Event by id " + id + " not found"
-        })
+        });
     }
     return res.status(200).json({
         success: true,
         data: Event,
     });
-}
-exports.createEvent = async (res, req) => {
+};
+exports.createEvent = async (req, res) => {
     const { data } = req.body;
-    const event = await EventModel.create({
+    const eventCreate = await EventModel.create({
         ...data
     });
     return res.status(201).json({
         success: true,
-        data: event
+        data: eventCreate
     });
-}
-exports.updateEventById = async (res, req) => {
+};
+exports.updateEventById = async (req, res) => {
     const { id } = req.params;
     const { data } = req.body;
     const updateEvent = await EventModel.findOneAndUpdate(
@@ -61,9 +61,9 @@ exports.updateEventById = async (res, req) => {
         data: updateEvent
     });
 }
-exports.deleteEvent = async (res, req) => {
+exports.deleteEvent = async (req, res) => {
     const { id } = req.params;
-    const event = await UserModel.deleteOne({
+    const event = await EventModel.deleteOne({
         _id: id
     });
     return res.status(202).json({
