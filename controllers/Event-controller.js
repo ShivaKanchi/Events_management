@@ -8,7 +8,6 @@ exports.getAllEvents = async (req, res) => {
             message: "No Events available yet"
         })
     }
-    console.log(Events);
     return res.status(200).json(
         {
             success: true,
@@ -75,7 +74,9 @@ exports.deleteEvent = async (req, res) => {
 
 exports.getEventByCity = async (req, res) => {
     const { city } = req.params;
-    const Event = await EventModel.findById(city);
+    const Event = await EventModel.find({
+        city: city
+    });
     if (!Event) {
         return res.status(404).json({
             success: false,
@@ -84,6 +85,43 @@ exports.getEventByCity = async (req, res) => {
     }
     return res.status(200).json({
         success: true,
+        message: "Events in city " + city,
+        data: Event,
+    })
+}
+
+exports.getEventByCoordinator = async (req, res) => {
+    const { coordinator } = req.params;
+    const Event = await EventModel.find({
+        coordinator: coordinator
+    });
+    if (!Event) {
+        return res.status(404).json({
+            success: false,
+            message: "No Events with Coordinator " + coordinator
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        message: "Events with Coordinator " + coordinator,
+        data: Event,
+    })
+}
+
+exports.getEventByCertificate = async (req, res) => {
+    const { certificate } = req.params;
+    const Event = await EventModel.find({
+        certificate: certificate
+    });
+    if (!Event) {
+        return res.status(404).json({
+            success: false,
+            message: "No Events with Certificate " + certificate
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        message: "Events with Certificate " + certificate,
         data: Event,
     })
 }
