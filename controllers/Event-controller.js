@@ -72,13 +72,14 @@ exports.deleteEvent = async (req, res) => {
         data: event,
     });
 }
+
 exports.getEventByCity = async (req, res) => {
     const { city } = req.params;
     const Event = await EventModel.findById(city);
     if (!Event) {
         return res.status(404).json({
             success: false,
-            message: "No Events in " + city
+            message: "No Events found in " + city
         });
     }
     return res.status(200).json({

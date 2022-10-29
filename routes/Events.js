@@ -12,5 +12,5 @@ router.put("/:id", updateEventById);
 //delete
 router.delete("/:id", deleteEvent);
 //get by city
-router.get("/cities/:city", getEventByCity);
+router.get("/city/:city", getEventByCity);
 module.exports = router;
