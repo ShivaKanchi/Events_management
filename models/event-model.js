@@ -29,6 +29,14 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
+    state: {
+        type: String,
+        required: true
+    },
+    pincode: {
+        type: String,
+        required: true
+    },
     certificate: {
         type: String,
         required: false
